@@ -1,0 +1,6 @@
+POST http://localhost:5000/newsletter
+content-type: application/json
+
+{
+    "email": "abaaaaaaaaaac@gmail.com"
+}
