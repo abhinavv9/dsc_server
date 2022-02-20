@@ -3,8 +3,9 @@ const { Auth } = require("two-step-auth");
 const bodyParser = require("body-parser");
 const request = require("request");
 const dotenv= require("dotenv")
+const https = require("https");
 
-dotenv.config({path : '.env'})
+dotenv.config({path : 'config.env'})
 
 const app = express();
 
@@ -51,42 +52,36 @@ app.post("/otp", async (req, res) => {
 });
 
 app.post("/newsletter", (req, res) => {
-  const email = req.body.email;
+    var email = req.body.email
 
-  const data = {
-    members: [
-      {
-        email_address: email,
-        status: "subscribed",
-      },
-    ],
-  };
-
-  const jsonData = JSON.stringify(data);
-
-  const options = {
-    url: process.env.MAILCHIMP_URL,
-    method: "POST",
-    headers: {
-      Authorization: process.env.MAILCHIMP_KEY,
-    },
-    body: jsonData,
-  };
-
-  request(options, (err, response, body) => {
-    if (err) {
-      res.json({ err: err, subscribed: false });
-    } else {
-      if (response.statusCode === 200) {
-        res.json({ subscribed: true });
-      } else {
-        res.json({ err: err, subscribed: false });
-      }
+    var data = {
+        members : [
+            {
+                email_address : email,
+                status:"subscribed"
+            }
+        ]
     }
-    response.on("data", (data) => {
-      console.log(JSON.parse(data));
-    });
-  });
+    const jsondata = JSON.stringify(data)
+    const url = process.env.MAILCHIMP_URL
+    const options = {
+        method :"POST",
+        auth : process.env.MAILCHIMP_KEY 
+    }
+    const request = https.request(url,options,function(response){
+        response.on("data",function(data){
+            console.log(JSON.parse(data));
+        })
+        if(response.statusCode === 200){
+            console.log("success");
+        }
+        else {
+            console.log("Here is error  "+error);
+        }
+    })
+    request.write(jsondata)
+    request.end()
+    res.send("Subscribed")
 });
 
 const port = process.env.PORT || 5000;
