@@ -2,7 +2,9 @@ const express = require("express");
 const { Auth } = require("two-step-auth");
 const bodyParser = require("body-parser");
 const request = require("request");
-require("dotenv").config();
+const dotenv= require("dotenv")
+
+dotenv.config({path : '.env'})
 
 const app = express();
 
