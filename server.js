@@ -28,7 +28,12 @@ app.post("/register", async (req, res) => {
     // console.log(res1.mail);
     // console.log(res1.OTP);
     check = res1.OTP;
-    if (res1.status === 200) res.redirect("/otp");
+    if (res1.status === 200) {
+      return res.status(200).json({"message" : "OTP sent to your email"});
+    }
+    else{
+      return res.status(422).json({"message" : "Email not found"});
+    }
   } catch (err) {
     console.log("Error here" + err);
   }
@@ -40,11 +45,11 @@ app.post("/otp", async (req, res) => {
     if (Number(req.body.otp) === check) {
       // alert("OTP Matched")
       console.log("OTP Matched");
-      res.redirect("/details");
+      return res.status(200).json({"message" : "OTP sent to your email"});
     } else {
       // alert("OTP Not Matched")
       console.log("OTP Not Matched");
-      res.redirect("/register");
+      return res.status(422).json({"message" : "Email not found"});
     }
   } catch (err) {
     console.log(err);
