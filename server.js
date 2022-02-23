@@ -5,7 +5,7 @@ const request = require("request");
 const dotenv= require("dotenv")
 const https = require("https");
 
-dotenv.config({path : 'config.env'})
+dotenv.config({path : 'secrets.env'})
 
 const app = express();
 
