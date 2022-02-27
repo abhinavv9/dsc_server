@@ -28,10 +28,10 @@ const {
 
 const router = express.Router();
 
-router.route("/team").get(getAllAlumniMember);
+router.route("/alumni").get(getAllAlumniMember);
 
-router.post("/team/new", upload.single("teamImage"), createAlumniMember);
+router.post("/alumni/new", upload.single("alumniImage"), createAlumniMember);
 
-router.route("/team/:id").get(getAlumniDetail);
+router.route("/alumni/:id").get(getAlumniDetail);
 
 module.exports = router;
