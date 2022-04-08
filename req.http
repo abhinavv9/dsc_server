@@ -1,6 +1,8 @@
-POST http://localhost:5000/newsletter
-content-type: application/json
+POST http://localhost:5000/api/posts
+content-type: multipart/form-data
 
 {
-    "email": "abaaaaaaaaaac@gmail.com"
+    "title": "test post",
+    "content" : "test",
+    "image": "",
 }
